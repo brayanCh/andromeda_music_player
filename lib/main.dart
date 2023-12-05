@@ -1,4 +1,6 @@
+import 'package:andromeda_music_player/blocs/music_list/music_list_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'screens/song_screen.dart';
 
@@ -18,7 +20,11 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.green),
         useMaterial3: true,
       ),
-      home: const NavigationContainer(),
+      home: MultiBlocProvider(providers: [
+        BlocProvider<MusicListBloc>(
+          create: (contex) => MusicListBloc(),
+        ),
+      ], child: const NavigationContainer()),
     );
   }
 }
@@ -35,32 +41,37 @@ class _MyHomePageState extends State<NavigationContainer> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      bottomNavigationBar: NavigationBar(
-        onDestinationSelected: (int index) {
-          setState(() {
-            currentPageIndex = index;
-          });
-        },
-        selectedIndex: currentPageIndex,
-        destinations: const [
-          NavigationDestination(
-            icon: Icon(Icons.music_note),
-            label: 'Songs',
-          ),
-          NavigationDestination(
-            icon: Icon(Icons.folder),
-            label: 'Files',
-          ),
-          NavigationDestination(
-            icon: Icon(Icons.list),
-            label: 'Playlists',
-          ),
-        ],
-      ),
-      body: <Widget>[
-        SongScreen(),
-      ][currentPageIndex],
-    );
+    return BlocBuilder<MusicListBloc, MusicListState>(
+        builder: (context, state) {
+      return Scaffold(
+        bottomNavigationBar: NavigationBar(
+          onDestinationSelected: (int index) {
+            setState(() {
+              currentPageIndex = index;
+            });
+          },
+          selectedIndex: currentPageIndex,
+          destinations: const [
+            NavigationDestination(
+              icon: Icon(Icons.music_note),
+              label: 'Songs',
+            ),
+            NavigationDestination(
+              icon: Icon(Icons.folder),
+              label: 'Files',
+            ),
+            NavigationDestination(
+              icon: Icon(Icons.list),
+              label: 'Playlists',
+            ),
+          ],
+        ),
+        body: <Widget>[
+          const SongScreen(),
+          const Text('Files'),
+          const Text('Playlists'),
+        ][currentPageIndex],
+      );
+    });
   }
 }
