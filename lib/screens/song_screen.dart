@@ -26,7 +26,7 @@ class SongScreenState extends State<SongScreen> {
         builder: (context, state) {
       return Scaffold(
         appBar: AppBar(
-          title: const Text('Song Screen'),
+          title: Text('Song Screen' + ' ' + '(${state.musicList.length})'),
         ),
         body: Column(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -51,7 +51,6 @@ class SongScreenState extends State<SongScreen> {
                   ),
                 ],
                 onSelectionChanged: (Set<SongScreenSection> section) {
-                  print(state.musicList);
                   setState(() {
                     currentSection = section.first;
                   });

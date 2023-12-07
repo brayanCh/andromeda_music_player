@@ -12,22 +12,20 @@ class MusicListState {
   Future<MusicListState> readLocalMusic({
     List<dynamic>? musicList,
   }) async {
-    Directory? extDir = await getExternalStorageDirectory();
+    PermissionStatus readPermission = await Permission.audio.request();
+    final OnAudioQuery audioQuery = OnAudioQuery();
 
-    if (extDir == null) {
+    if (readPermission != PermissionStatus.granted) {
       return this;
     }
 
-    List<FileSystemEntity> files =
-        extDir.listSync(recursive: true, followLinks: false);
-    List<String> musicList = [];
-    for (FileSystemEntity file in files) {
-      if (file.path.endsWith('.mp3')) {
-        musicList.add(file.path);
-      }
+    List<SongModel> audios = await audioQuery.querySongs();
+
+    if (audios.isEmpty) {
+      return this;
     }
-    print(musicList);
-    this.musicList = musicList;
+
+    this.musicList = audios;
     return this;
   }
 
