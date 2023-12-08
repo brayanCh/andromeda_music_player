@@ -1,7 +1,6 @@
 import 'package:andromeda_music_player/blocs/music_list/music_list_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:permission_handler/permission_handler.dart';
 
 import 'screens/song_screen.dart';
 
@@ -58,8 +57,12 @@ class _MyHomePageState extends State<NavigationContainer> {
               label: 'Songs',
             ),
             NavigationDestination(
-              icon: Icon(Icons.folder),
-              label: 'Files',
+              icon: Icon(Icons.album),
+              label: 'Albums',
+            ),
+            NavigationDestination(
+              icon: Icon(Icons.mic),
+              label: 'Artists',
             ),
             NavigationDestination(
               icon: Icon(Icons.list),
@@ -69,7 +72,8 @@ class _MyHomePageState extends State<NavigationContainer> {
         ),
         body: <Widget>[
           const SongScreen(),
-          const Text('Files'),
+          const Text('Albums'),
+          const Text('Artists'),
           const Text('Playlists'),
         ][currentPageIndex],
       );

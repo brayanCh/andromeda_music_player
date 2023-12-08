@@ -3,14 +3,20 @@ part of 'music_list_bloc.dart';
 enum Status { win, lose, draw, playing }
 
 class MusicListState {
-  List<dynamic> musicList;
+  List<SongModel> musicList;
+  List<AlbumModel> albumList;
+  List<ArtistModel> artistList;
+  List<List<SongModel>> playlist;
 
   MusicListState({
     this.musicList = const [],
+    this.albumList = const [],
+    this.artistList = const [],
+    this.playlist = const [],
   });
 
   Future<MusicListState> readLocalMusic({
-    List<dynamic>? musicList,
+    List<SongModel>? musicList,
   }) async {
     PermissionStatus readPermission = await Permission.audio.request();
     final OnAudioQuery audioQuery = OnAudioQuery();
@@ -24,6 +30,7 @@ class MusicListState {
     if (audios.isEmpty) {
       return this;
     }
+    print('audios: ${audios.length} $audios');
 
     this.musicList = audios;
     return this;
@@ -35,10 +42,16 @@ class MusicListState {
   }
 
   MusicListState copyWith({
-    List<String>? musicList,
+    List<SongModel>? musicList,
+    List<AlbumModel>? albumList,
+    List<ArtistModel>? artistList,
+    List<List<SongModel>>? playlist,
   }) {
     return MusicListState(
       musicList: musicList ?? this.musicList,
+      albumList: albumList ?? this.albumList,
+      artistList: artistList ?? this.artistList,
+      playlist: playlist ?? this.playlist,
     );
   }
 }

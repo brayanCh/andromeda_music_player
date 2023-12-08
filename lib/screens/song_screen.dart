@@ -57,6 +57,9 @@ class SongScreenState extends State<SongScreen> {
                 },
               ),
             ),
+            ListView(
+              shrinkWrap: true,
+            ),
           ],
         ),
       );
