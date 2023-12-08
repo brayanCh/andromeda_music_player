@@ -1,4 +1,5 @@
 import 'package:andromeda_music_player/blocs/music_list/music_list_bloc.dart';
+import 'package:andromeda_music_player/components/song_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -31,34 +32,12 @@ class SongScreenState extends State<SongScreen> {
         body: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: <Widget>[
-            Container(
-              padding: const EdgeInsets.all(25.0),
-              child: SegmentedButton(
-                selected: <SongScreenSection>{currentSection},
-                segments: const <ButtonSegment<SongScreenSection>>[
-                  ButtonSegment<SongScreenSection>(
-                    value: SongScreenSection.artist,
-                    label: Text('Artist'),
-                  ),
-                  ButtonSegment<SongScreenSection>(
-                    value: SongScreenSection.album,
-                    label: Text('Album'),
-                  ),
-                  ButtonSegment<SongScreenSection>(
-                    value: SongScreenSection.song,
-                    label: Text('Song'),
-                  ),
-                ],
-                onSelectionChanged: (Set<SongScreenSection> section) {
-                  setState(() {
-                    currentSection = section.first;
-                  });
-                },
-              ),
-            ),
-            ListView(
-              shrinkWrap: true,
+          children: [
+            Expanded(
+              child:
+                  ListView(padding: const EdgeInsets.all(8), children: <Widget>[
+                for (var song in state.musicList) SongItem(song: song),
+              ]),
             ),
           ],
         ),

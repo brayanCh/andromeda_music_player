@@ -17,6 +17,7 @@ dependencies:
   bloc: ^8.1.2
   permission_handler: ^11.1.0
   on_audio_query: ^2.9.0
+  flutter_i18n: ^0.34.0
 
 dev_dependencies:
   flutter_test:
