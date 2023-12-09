@@ -1,19 +1,25 @@
 part of 'music_list_bloc.dart';
 
-enum Status { win, lose, draw, playing }
+class MusicListState extends Equatable {
+  final List<SongModel> musicList;
+  final List<AlbumModel> albumList;
+  final List<ArtistModel> artistList;
+  final List<List<SongModel>> playlist;
 
-class MusicListState {
-  List<SongModel> musicList;
-  List<AlbumModel> albumList;
-  List<ArtistModel> artistList;
-  List<List<SongModel>> playlist;
-
-  MusicListState({
+  const MusicListState({
     this.musicList = const [],
     this.albumList = const [],
     this.artistList = const [],
     this.playlist = const [],
   });
+
+  @override
+  List<Object?> get props => [
+        musicList,
+        albumList,
+        artistList,
+        playlist,
+      ];
 
   Future<MusicListState> readLocalMusic({
     List<SongModel>? musicList,
@@ -26,19 +32,22 @@ class MusicListState {
     }
 
     List<SongModel> audios = await audioQuery.querySongs();
+    print('audios: ${audios.length}');
 
     if (audios.isEmpty) {
       return this;
     }
-    print('audios: ${audios.length} $audios');
 
-    this.musicList = audios;
-    return this;
+    return copyWith(musicList: audios);
   }
 
   MusicListState cleanList() {
-    musicList = [];
-    return this;
+    return copyWith(
+      musicList: [],
+      albumList: [],
+      artistList: [],
+      playlist: [],
+    );
   }
 
   MusicListState copyWith({

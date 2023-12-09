@@ -16,41 +16,51 @@ class SongBarState extends State<SongBar> {
 
     return BlocBuilder<CurrentSongBloc, CurrentSongState>(
         builder: (context, state) {
-      return Positioned(
-          bottom: 0,
-          child: Container(
-            height: 70,
-            decoration: BoxDecoration(
-              border: Border(
-                top: BorderSide(
-                  color: Colors.grey[500]!,
-                  width: 1.0,
+      return state.currentSong == null || state.currentSong == {}
+          ? Container()
+          : Positioned(
+              bottom: 0,
+              child: Container(
+                height: 70,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  border: Border(
+                    top: BorderSide(
+                      color: Colors.grey[500]!,
+                      width: 1.0,
+                    ),
+                  ),
                 ),
-              ),
-            ),
-            width: MediaQuery.of(context).size.width,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                IconButton(
-                  onPressed: () {},
-                  icon: const Icon(Icons.skip_previous),
+                width: MediaQuery.of(context).size.width,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    IconButton(
+                      onPressed: () {},
+                      icon: const Icon(Icons.skip_previous),
+                    ),
+                    Text(
+                      '${state.currentSong?.title}',
+                      style: const TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    IconButton(
+                      onPressed: () {
+                        provider.add(Interact());
+                      },
+                      icon: state.isPlaying == true
+                          ? Icon(Icons.pause)
+                          : Icon(Icons.play_arrow),
+                    ),
+                    IconButton(
+                      onPressed: () {},
+                      icon: const Icon(Icons.skip_next),
+                    ),
+                  ],
                 ),
-                IconButton(
-                  onPressed: () {
-                    provider.add(Interact());
-                  },
-                  icon: state.isPlaying
-                      ? const Icon(Icons.pause)
-                      : const Icon(Icons.play_arrow),
-                ),
-                IconButton(
-                  onPressed: () {},
-                  icon: const Icon(Icons.skip_next),
-                ),
-              ],
-            ),
-          ));
+              ));
     });
   }
 }

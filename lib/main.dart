@@ -3,9 +3,28 @@ import 'package:andromeda_music_player/blocs/music_list/music_list_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'screens/song_screen.dart';
+import 'screens/song_list_screen.dart';
+
+class AppBlocObserver extends BlocObserver {
+  /// {@macro app_bloc_observer}
+  const AppBlocObserver();
+
+  @override
+  void onChange(BlocBase<dynamic> bloc, Change<dynamic> change) {
+    super.onChange(bloc, change);
+  }
+
+  @override
+  void onTransition(
+    Bloc<dynamic, dynamic> bloc,
+    Transition<dynamic, dynamic> transition,
+  ) {
+    super.onTransition(bloc, transition);
+  }
+}
 
 void main() {
+  Bloc.observer = const AppBlocObserver();
   runApp(const MyApp());
 }
 

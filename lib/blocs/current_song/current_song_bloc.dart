@@ -2,6 +2,7 @@
 import 'dart:io';
 
 import 'package:bloc/bloc.dart';
+import 'package:equatable/equatable.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:meta/meta.dart';
 import 'package:on_audio_query/on_audio_query.dart';
@@ -14,8 +15,8 @@ class CurrentSongBloc extends Bloc<CurrentSongEvent, CurrentSongState> {
     on<Interact>((event, emit) {
       emit(state.interact());
     });
-    on<SetNewSong>((event, emit) {
-      emit(state.setNewSong(event.song));
+    on<SetNewSong>((event, emit) async {
+      emit(await state.setNewSong(event.song));
     });
   }
 }

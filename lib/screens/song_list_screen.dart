@@ -30,20 +30,15 @@ class SongScreenState extends State<SongScreen> {
         appBar: AppBar(
           title: Text('Song Screen' + ' ' + '(${state.musicList.length})'),
         ),
-        body: Stack(
+        body: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Expanded(
-                  child: ListView(
-                      padding: const EdgeInsets.all(8),
-                      children: <Widget>[
-                        for (var song in state.musicList) SongItem(song: song),
-                      ]),
-                ),
-              ],
+            Expanded(
+              child:
+                  ListView(padding: const EdgeInsets.all(8), children: <Widget>[
+                for (var song in state.musicList) SongItem(song: song),
+              ]),
             ),
             const SongBar(),
           ],
