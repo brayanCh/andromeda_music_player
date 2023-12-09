@@ -1,3 +1,4 @@
+import 'package:andromeda_music_player/blocs/current_song/current_song_bloc.dart';
 import 'package:andromeda_music_player/blocs/music_list/music_list_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -23,6 +24,9 @@ class MyApp extends StatelessWidget {
       home: MultiBlocProvider(providers: [
         BlocProvider<MusicListBloc>(
           create: (contex) => MusicListBloc(),
+        ),
+        BlocProvider<CurrentSongBloc>(
+          create: (contex) => CurrentSongBloc(),
         ),
       ], child: const NavigationContainer()),
     );

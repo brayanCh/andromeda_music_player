@@ -1,4 +1,5 @@
 import 'package:andromeda_music_player/blocs/music_list/music_list_bloc.dart';
+import 'package:andromeda_music_player/components/song_bar.dart';
 import 'package:andromeda_music_player/components/song_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -29,16 +30,22 @@ class SongScreenState extends State<SongScreen> {
         appBar: AppBar(
           title: Text('Song Screen' + ' ' + '(${state.musicList.length})'),
         ),
-        body: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
+        body: Stack(
           children: [
-            Expanded(
-              child:
-                  ListView(padding: const EdgeInsets.all(8), children: <Widget>[
-                for (var song in state.musicList) SongItem(song: song),
-              ]),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Expanded(
+                  child: ListView(
+                      padding: const EdgeInsets.all(8),
+                      children: <Widget>[
+                        for (var song in state.musicList) SongItem(song: song),
+                      ]),
+                ),
+              ],
             ),
+            const SongBar(),
           ],
         ),
       );
