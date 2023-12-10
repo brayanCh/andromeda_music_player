@@ -1,23 +1,41 @@
 part of 'current_song_bloc.dart';
 
-enum Status { win, lose, draw, playing }
+class AudioPlayerSingleton {
+  static final AudioPlayer _instance = AudioPlayer();
 
-final AudioPlayer player = AudioPlayer();
+  static AudioPlayer getPlayer() {
+    return _instance;
+  }
+}
 
 final class CurrentSongState extends Equatable {
   final SongModel? currentSong;
   final bool isPlaying;
+  final AudioPlayer player = AudioPlayerSingleton.getPlayer();
 
   @override
   List<Object> get props => [currentSong ?? {}, isPlaying];
 
-  const CurrentSongState({required this.currentSong, this.isPlaying = false});
+  CurrentSongState({required this.currentSong, this.isPlaying = false});
 
   Future<CurrentSongState> setNewSong(SongModel song) async {
-    //print('CurrentSongState: setNewSong: song: ${song.title} ${song.artist} ${song.album}');
-    await player.setFilePath(song.data);
-    player.play();
-    return CurrentSongState(currentSong: song, isPlaying: true);
+    try {
+      print('CurrentSongState: setNewSong: song: ${song}');
+      AudioSource.uri(Uri.parse(song.data),
+          tag: MediaItem(
+            // Specify a unique ID for each media item:
+            id: song.id.toString(),
+            // Metadata to display in the notification:
+            album: song.album,
+            title: song.title,
+          ));
+      await player.setFilePath(song.data);
+      //player.play();
+      return CurrentSongState(currentSong: song, isPlaying: true);
+    } catch (e) {
+      print('CurrentSongState: setNewSong: error: $e');
+      return CurrentSongState(currentSong: song, isPlaying: true);
+    }
   }
 
   CurrentSongState copyWith({SongModel? currentSong, bool? isPlaying}) {

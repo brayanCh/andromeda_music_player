@@ -25,6 +25,8 @@ class MusicListState extends Equatable {
     List<SongModel>? musicList,
   }) async {
     PermissionStatus readPermission = await Permission.audio.request();
+    PermissionStatus notificationPermission =
+        await Permission.notification.request();
     final OnAudioQuery audioQuery = OnAudioQuery();
 
     if (readPermission != PermissionStatus.granted) {
@@ -32,13 +34,16 @@ class MusicListState extends Equatable {
     }
 
     List<SongModel> audios = await audioQuery.querySongs();
-    print('audios: ${audios.length}');
+    List<AlbumModel> albums = await audioQuery.queryAlbums();
+    List<ArtistModel> artists = await audioQuery.queryArtists();
 
+    //print('albums: $albums');
+    //print('artists: $artists');
     if (audios.isEmpty) {
       return this;
     }
 
-    return copyWith(musicList: audios);
+    return copyWith(musicList: audios, albumList: albums, artistList: artists);
   }
 
   MusicListState cleanList() {
