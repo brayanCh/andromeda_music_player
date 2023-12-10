@@ -42,15 +42,25 @@ class SongBarState extends State<SongBar> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 //mainAxisSize: MainAxisSize.min,
                 children: [
-                  Text(
-                    trimTitle(state.currentSong?.title ?? ''),
-                    //overflow: TextOverflow.fade,
-                    //textWidthBasis: TextWidthBasis.parent,
-                    style: const TextStyle(
-                      fontSize: 15,
-                      fontWeight: FontWeight.bold,
+                  Container(
+                    height: 50,
+                    width: 50,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: Colors.grey[300],
                     ),
                   ),
+                  SizedBox(
+                      width: MediaQuery.of(context).size.width * 0.4,
+                      child: Text(
+                        trimTitle(state.currentSong?.title ?? ''),
+                        //overflow: TextOverflow.fade,
+                        //textWidthBasis: TextWidthBasis.parent,
+                        style: const TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      )),
                   IconButton(
                     onPressed: () {
                       provider.add(Interact());
@@ -59,6 +69,8 @@ class SongBarState extends State<SongBar> {
                         ? Icon(Icons.pause)
                         : Icon(Icons.play_arrow),
                   ),
+                  IconButton(
+                      onPressed: () {}, icon: Icon(Icons.keyboard_control)),
                 ],
               ),
             );

@@ -10,15 +10,7 @@ class SongScreen extends StatefulWidget {
   SongScreenState createState() => SongScreenState();
 }
 
-enum SongScreenSection {
-  artist,
-  album,
-  song,
-}
-
 class SongScreenState extends State<SongScreen> {
-  SongScreenSection currentSection = SongScreenSection.album;
-
   @override
   Widget build(BuildContext context) {
     final provider = BlocProvider.of<MusicListBloc>(context);
@@ -28,7 +20,7 @@ class SongScreenState extends State<SongScreen> {
         builder: (context, state) {
       return Scaffold(
         appBar: AppBar(
-          title: Text('Song Screen' + ' ' + '(${state.musicList.length})'),
+          title: Text('Song Screen (${state.musicList.length})'),
         ),
         body: Column(
           mainAxisAlignment: MainAxisAlignment.start,

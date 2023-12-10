@@ -10,16 +10,21 @@ class AudioPlayerSingleton {
 
 final class CurrentSongState extends Equatable {
   final SongModel? currentSong;
+  final List<SongModel>? currentPlaylist;
   final bool isPlaying;
   final AudioPlayer player = AudioPlayerSingleton.getPlayer();
 
   @override
   List<Object> get props => [currentSong ?? {}, isPlaying];
 
-  CurrentSongState({required this.currentSong, this.isPlaying = false});
+  CurrentSongState(
+      {required this.currentSong,
+      this.currentPlaylist = const [],
+      this.isPlaying = false});
 
   Future<CurrentSongState> setNewSong(SongModel song) async {
     try {
+      /*
       print('CurrentSongState: setNewSong: song: ${song}');
       AudioSource.uri(Uri.parse(song.data),
           tag: MediaItem(
@@ -29,8 +34,9 @@ final class CurrentSongState extends Equatable {
             album: song.album,
             title: song.title,
           ));
+          */
       await player.setFilePath(song.data);
-      //player.play();
+      player.play();
       return CurrentSongState(currentSong: song, isPlaying: true);
     } catch (e) {
       print('CurrentSongState: setNewSong: error: $e');
