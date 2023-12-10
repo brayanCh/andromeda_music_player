@@ -1,6 +1,7 @@
 import 'package:andromeda_music_player/blocs/current_song/current_song_bloc.dart';
 import 'package:andromeda_music_player/blocs/music_list/music_list_bloc.dart';
 import 'package:andromeda_music_player/screens/album_list_screen.dart';
+import 'package:andromeda_music_player/screens/artist_list_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 //import 'package:just_audio_background/just_audio_background.dart';
@@ -105,7 +106,7 @@ class _MyHomePageState extends State<NavigationContainer> {
         body: <Widget>[
           const SongScreen(),
           const AlbumListScreen(),
-          const Text('Artists'),
+          const ArtistListScreen(),
           const Text('Playlists'),
         ][currentPageIndex],
       );
