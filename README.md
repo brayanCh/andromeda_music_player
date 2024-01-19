@@ -1,3 +1,3 @@
 # Andromeda music player
 
-Basic music palyer made in flutter
+Basic music player made in flutter
